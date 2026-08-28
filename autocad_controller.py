@@ -566,6 +566,9 @@ class AutoCADController:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
+    # COMMAND_CATALOG action "dimension" → method "dimension_linear"
+    dimension = dimension_linear
+
     def hatched_area(self, boundary_points: list, pattern: str = "ANSI31",
                     layer: str = "") -> dict:
         try:
@@ -584,6 +587,9 @@ class AutoCADController:
             return {"success": True, "entity": "Hatch"}
         except Exception as e:
             return {"success": False, "error": str(e)}
+
+    # COMMAND_CATALOG action "hatch" → method "hatched_area"
+    hatch = hatched_area
 
     # -- layers / entity edit ---------------------------------------------- #
     def create_layer(self, name: str, color: int = 7) -> dict:
