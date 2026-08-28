@@ -9,7 +9,7 @@ description = "通过自然语言对话驱动 AutoCAD（及中望CAD/浩辰CAD�
 short_description = "对话式CAD绘图：用自然语言让AI在AutoCAD中画2D工程图与3D模型。"
 keywords = ["autocad", "cad", "绘图", "制图", "画图", "工程图", "建模", "3d", "图层", "dimension", "drawing", "zwcad", "gstarcad"]
 version = "1.0.0"
-entry = "plugins.autocad_assistant_tool:AutoCADAssistantPlugin"
+entry = "plugin.plugins.autocad_assistant_tool:AutoCADAssistantPlugin"
 passive = false
 
 [plugin.author]

@@ -13,9 +13,9 @@ _wheels/
 data/
 log/
 .search_cache/
+store.db
 
 # 临时/编辑器
-.vscode/
 .idea/
 *.swp
 .commit_msg.txt
