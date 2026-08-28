@@ -13,46 +13,6 @@
 """
 from __future__ import annotations
 
-# --- VENDORED PYTHON PATH INJECTION (inline, no _bootstrap import needed) ---
-# N.E.K.O 子进程 sys.path 不含插件自身目录，任何形式的 ``import _bootstrap``
-# 都会失败。直接内联 vendor 路径注入逻辑，在 SDK import 之前执行，确保
-# pywin32 的 .pyd / .dll 能被正确加载。
-import os as _os
-import sys as _sys
-
-_VENDORED = False
-
-
-def _setup_vendor_paths() -> None:
-    global _VENDORED
-    if _VENDORED:
-        return
-    _VENDORED = True
-    # __init__.py 所在目录即插件根目录
-    _root = _os.path.dirname(_os.path.abspath(__file__))
-    _cp_tag = "cp{0}{1}".format(_sys.version_info.major, _sys.version_info.minor)
-    # 版本专属二进制目录（_win32sysloader.pyd + pythoncomXY.dll）
-    _cp_dir = _os.path.join(_root, "vendor_" + _cp_tag)
-    if _os.path.isdir(_cp_dir) and _cp_dir not in _sys.path:
-        _sys.path.insert(0, _cp_dir)
-        _dll_dir = _os.path.join(_cp_dir, "pywin32_system32")
-        if _os.path.isdir(_dll_dir) and hasattr(_os, "add_dll_directory"):
-            try:
-                _os.add_dll_directory(_dll_dir)
-            except (OSError, FileNotFoundError):
-                pass
-    # 纯 Python vendor 目录（win32com/ + pywintypes.py + pythoncom.py）
-    _vendor_dir = _os.path.join(_root, "vendor")
-    if _os.path.isdir(_vendor_dir) and _vendor_dir not in _sys.path:
-        try:
-            _sys.path.insert(1, _vendor_dir)
-        except IndexError:
-            _sys.path.append(_vendor_dir)
-
-
-_setup_vendor_paths()
-# --- END VENDORED INJECTION ---
-
 from typing import Annotated, Any
 
 from plugin.sdk.plugin import (
@@ -65,6 +25,7 @@ from plugin.sdk.plugin import (
     plugin_entry,
 )
 
+from . import _vendor_path as _vendor_path  # triggers vendored path setup
 from .autocad_controller import COMMAND_CATALOG, AutoCADController
 
 
