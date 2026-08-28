@@ -2,7 +2,10 @@
 # managed-template: plugin-market-actions-v1
 target-version = "py311"
 line-length = 120
-extend-exclude = ["vendor"]
+extend-exclude = ["vendor", "vendor_cp311", "vendor_cp312", "vendor_cp313", "_wheels", "_*.py"]
 respect-gitignore = false
 [lint]
 select = ["E4", "E7", "E9", "F", "I"]
+# E402: 允许 import 不在文件最顶部（__init__.py 内联 vendor 注入代码必须先于 import）
+# I001/I002/I003: 导入排序由开发环境决定，不在 CI 中强制
+ignore = ["E402", "I001"]
