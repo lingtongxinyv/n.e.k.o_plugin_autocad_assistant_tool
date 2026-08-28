@@ -17,8 +17,8 @@ import time
 from typing import Optional
 
 try:
-    import win32com.client
     import pythoncom
+    import win32com.client
     HAS_WIN32 = True
 except ImportError:  # pragma: no cover - exercised only without pywin32
     HAS_WIN32 = False

@@ -56,16 +56,16 @@ _setup_vendor_paths()
 from typing import Annotated, Any
 
 from plugin.sdk.plugin import (
+    Err,
     NekoPluginBase,
+    Ok,
+    SdkError,
+    lifecycle,
     neko_plugin,
     plugin_entry,
-    lifecycle,
-    Ok,
-    Err,
-    SdkError,
 )
 
-from .autocad_controller import AutoCADController, COMMAND_CATALOG
+from .autocad_controller import COMMAND_CATALOG, AutoCADController
 
 
 @neko_plugin
